@@ -1,29 +1,4 @@
-name: Download Files from Config
-
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'
-
-permissions:
-  contents: write
-
-jobs:
-  download_files:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install PyYAML and requests
-        run: |
-          pip install pyyaml
-          pip install requests
-
-      - name: Read config and download files
-        run: |
-          python -c "
+python -c "
           import yaml
           import os
           import urllib.request
@@ -35,6 +10,8 @@ jobs:
               config = yaml.safe_load(f)
 
           files_to_download = [] #  用于存放最终的文件下载配置列表
+
+          default_branch = config.get('branch') #  从顶层配置中获取默认分支 (新增)
 
 
           #  ---  处理单个文件下载配置 (files 列表)  --- (与之前相同， 无需修改)
@@ -61,20 +38,21 @@ jobs:
               print('Using folder-based batch download configuration from \"folders\" section.')
               folders_config = config['folders']
               for folder_config in folders_config: #  遍历 folders 列表
-                  github_repo = folder_config.get('github_repo') #  从当前文件夹配置中获取 github_repo  (修改点!)
+                  github_repo = folder_config.get('github_repo')
                   folder_path = folder_config.get('folder_path')
                   file_extension = folder_config.get('file_extension')
                   backup_location = folder_config.get('backup_location')
+                  branch = folder_config.get('branch') or default_branch #  从文件夹配置中获取 branch，  如果不存在则使用默认分支 (修改点!)
 
-                  if github_repo and folder_path and file_extension and backup_location: #  检查文件夹配置是否完整 (新增 github_repo 检查)
-                      api_url = f'https://api.github.com/repos/{github_repo}/contents/{folder_path}' #  使用从文件夹配置中获取的 github_repo 构建 API URL (修改点!)
+                  if github_repo and folder_path and file_extension and backup_location:
+                      api_url = f'https://api.github.com/repos/{github_repo}/contents/{folder_path}?ref={branch}' #  构建 GitHub API URL，  包含 branch 参数 (修改点!)
 
                       try:
                           response = requests.get(api_url)
                           response.raise_for_status()
                           files_data = response.json()
                       except requests.exceptions.RequestException as e:
-                          print(f'Error fetching file list from GitHub API for folder \"{folder_path}\" in repository \"{github_repo}\": {e}') #  错误信息中包含仓库名
+                          print(f'Error fetching file list from GitHub API for folder \"{folder_path}\" in repository \"{github_repo}\", branch \"{branch}\": {e}') # 错误信息中包含分支名
                           continue
 
                       for file_info in files_data:
@@ -89,7 +67,7 @@ jobs:
                                   'download_location': backup_location
                               })
                   else:
-                      print(f'Warning: Incomplete folder configuration found in \"folders\" section. Skipping: {folder_config}') # 警告信息
+                      print(f'Warning: Incomplete folder configuration found in \"folders\" section. Skipping: {folder_config}')
 
 
           else:
@@ -124,11 +102,3 @@ jobs:
               print('No files to download based on the configuration.')
 
           "
-
-      - name: Commit files
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add --force .
-          git commit -m "Daily update"
-          git push
