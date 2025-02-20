@@ -52,15 +52,15 @@ jobs:
               print('No files configuration found in download_config.yaml')
           "
 
-      - name: Commit files  # 提交文件
+      - name: Commit files
         run: |
-          git config --local user.email "actions@github.com"  # 配置提交邮箱
-          git config --local user.name "GitHub Actions"       # 配置提交用户名
-          git add .  # 添加所有更改的文件到暂存区
-          git commit -m "Add downloaded files" -a  # 提交更改，并添加提交信息
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add .
+          git commit -m "Add downloaded files" -a
 
-      - name: Push changes  # 推送更改
-        uses: ad-m/github-push-action@v2
+      - name: Push changes
+        uses: ad-m/github-push-action@main #  修改这里，使用 @main 或 @v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # 使用 GitHub 提供的 token
-          branch: ${{ github.ref }} # 推送到触发 workflow 的分支
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
