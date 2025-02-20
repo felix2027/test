@@ -60,7 +60,7 @@ jobs:
           git commit -m "Add downloaded files" -a
 
       - name: Push changes
-        uses: ad-m/github-push-action@main #  修改这里，使用 @main 或 @v4
+        uses: ad-m/github-push-action@v0.8.0 #  修改为 @v0.8.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
