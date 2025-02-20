@@ -1,9 +1,9 @@
 name: Download Files from Config
 
 on:
-  workflow_dispatch:  # 允许手动触发 workflow
+  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *' # 每天 UTC 时间 00:00 (北京时间 08:00) 执行
+    - cron: '0 0 * * *'
 
 jobs:
   download_files:
@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Install PyYAML  # 安装 PyYAML 库
+      - name: Install PyYAML
         run: pip install pyyaml
 
       - name: Read config and download files
@@ -51,3 +51,16 @@ jobs:
           else:
               print('No files configuration found in download_config.yaml')
           "
+
+      - name: Commit files  # 提交文件
+        run: |
+          git config --local user.email "actions@github.com"  # 配置提交邮箱
+          git config --local user.name "GitHub Actions"       # 配置提交用户名
+          git add .  # 添加所有更改的文件到暂存区
+          git commit -m "Add downloaded files" -a  # 提交更改，并添加提交信息
+
+      - name: Push changes  # 推送更改
+        uses: ad-m/github-push-action@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # 使用 GitHub 提供的 token
+          branch: ${{ github.ref }} # 推送到触发 workflow 的分支
