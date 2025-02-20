@@ -1,4 +1,29 @@
-python -c "
+name: Download Files from Config
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  download_files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install PyYAML and requests
+        run: |
+          pip install pyyaml
+          pip install requests
+
+      - name: Read config and download files
+        run: |
+          python -c "
           import yaml
           import os
           import urllib.request
@@ -102,3 +127,11 @@ python -c "
               print('No files to download based on the configuration.')
 
           "
+
+      - name: Commit files
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add --force .
+          git commit -m "Daily update"
+          git push
