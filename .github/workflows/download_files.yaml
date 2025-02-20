@@ -7,28 +7,31 @@ on:
 
 jobs:
   download_files:
-    runs-on: ubuntu-latest  # 运行在 Ubuntu 最新版本环境
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code  # 检出代码
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Python  # 设置 Python 环境
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9' # 使用 Python 3.9 版本
+          python-version: '3.9'
 
-      - name: Read config and download files  # 读取配置并下载文件
+      - name: Install PyYAML  # 安装 PyYAML 库
+        run: pip install pyyaml
+
+      - name: Read config and download files
         run: |
           python -c "
           import yaml
           import os
           import urllib.request
 
-          config_file = 'download_config.yaml' # 配置文件名
+          config_file = 'download_config.yaml'
 
           with open(config_file, 'r') as f:
-              config = yaml.safe_load(f) # 读取 YAML 配置文件
+              config = yaml.safe_load(f)
 
           if 'files' in config:
               for file_config in config['files']:
@@ -36,15 +39,15 @@ jobs:
                   url = file_config['url']
                   download_location = file_config['download_location']
 
-                  os.makedirs(download_location, exist_ok=True) # 创建下载目录，如果不存在
-                  download_path = os.path.join(download_location, filename) # 拼接完整的文件下载路径
+                  os.makedirs(download_location, exist_ok=True)
+                  download_path = os.path.join(download_location, filename)
 
-                  print(f'Downloading {filename} from {url} to {download_path}') # 打印下载信息
+                  print(f'Downloading {filename} from {url} to {download_path}')
                   try:
-                      urllib.request.urlretrieve(url, download_path) # 下载文件
-                      print(f'Downloaded {filename} successfully to {download_path}') # 打印成功信息
+                      urllib.request.urlretrieve(url, download_path)
+                      print(f'Downloaded {filename} successfully to {download_path}')
                   except Exception as e:
-                      print(f'Error downloading {filename} from {url}: {e}') # 打印错误信息
+                      print(f'Error downloading {filename} from {url}: {e}')
           else:
-              print('No files configuration found in download_config.yaml') # 配置文件中没有文件配置信息
+              print('No files configuration found in download_config.yaml')
           "
