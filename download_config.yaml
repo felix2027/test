@@ -8,3 +8,9 @@ files:
   # - filename: example3.zip
   #   url: https://www.example.com/files/example3.zip
   #   download_location: ./
+
+folders: #  配置多个文件夹批量备份 (来自不同仓库)
+  - github_repo: ACL4SSR/ACL4SSR  #  第一个文件夹来自 ACL4SSR/ACL4SSR 仓库
+    folder_path: Clash/Ruleset
+    file_extension: .list
+    backup_location: ./config/Ruleset/
