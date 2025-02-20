@@ -1,4 +1,4 @@
-- name: Read config and download files
+- name: Download files
         run: |
           python -c "
           import yaml
