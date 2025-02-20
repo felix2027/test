@@ -1,6 +1,6 @@
 files:
   - filename: xsus.yaml
-    url: https://api.wcc.best/sub?target=clash&url=http%3A%2F%2F106.75.141.168%3A3389%2Fapi%2Fv1%2Fclient%2Fsubscribe%3Ftoken%3D46df0e5a0b59a78ab3102339d9245f24&insert=false&config=https%3A%2F%2Fraw.githubusercontent.com%2Ffelix2027%2Fmy_tools%2Fmain%2Fconfig%2Fproxy_config_online.ini&append_type=true&emoji=true&list=false&tfo=false&scv=true&fdn=false&expand=true&sort=false&udp=true&clash.doh=true&new_name=true
+    url: http://106.75.143.245:3390/api/v1/client/subscribe?token=46df0e5a0b59a78ab3102339d9245f24
     download_location: ./downloads/
   # - filename: example2.pdf
   #   url: https://www.example.com/files/example2.pdf
