@@ -1,0 +1,10 @@
+files:
+  - filename: xsus.yaml
+    url: https://www.example.com/files/example1.txt
+    download_location: ./downloads/
+  # - filename: example2.pdf
+  #   url: https://www.example.com/files/example2.pdf
+  #   download_location: ./documents/
+  # - filename: example3.zip
+  #   url: https://www.example.com/files/example3.zip
+  #   download_location: ./
