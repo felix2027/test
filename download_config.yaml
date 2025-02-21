@@ -18,7 +18,7 @@ folders:
     recursive: true
   - github_repo: blackmatrix7/ios_rule_script
     branch: master
-    folder_path: Clash
+    folder_path: rule/Clash
     file_extension: .list
     backup_location: ./config/Ruleset/blackmatrix7/
     recursive: true
