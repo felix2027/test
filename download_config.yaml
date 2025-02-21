@@ -9,16 +9,16 @@ files:
   #   url: https://www.example.com/files/example3.zip
   #   download_location: ./
 
-folders: #  配置多个文件夹批量备份 (来自不同仓库)
-  - github_repo: ACL4SSR/ACL4SSR  #  第一个文件夹来自 ACL4SSR/ACL4SSR 仓库
+folders:
+  - github_repo: ACL4SSR/ACL4SSR
     branch: master
     folder_path: Clash
     file_extension: .list
     backup_location: ./config/Ruleset/ACL4SSR/
     recursive: true
   - github_repo: blackmatrix7/ios_rule_script
-    branch: master
-    folder_path: Clash
-    file_extension: .list
-    backup_location: ./config/Ruleset/blackmatrix7/
-    recursive: true
+    branch: master
+    folder_path: Clash
+    file_extension: .list
+    backup_location: ./config/Ruleset/blackmatrix7/
+    recursive: true
