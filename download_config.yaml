@@ -93,9 +93,11 @@ folders:
     folder_path: Clash
     file_extension: .list
     backup_location: ./config/Ruleset/ACL4SSR/
-  - github_repo: ACL4SSR/ACL4SSR
-    branch: master
-    folder_path: Clash/Ruleset
-    file_extension: .list
-    backup_location: ./config/Ruleset/ACL4SSR/Ruleset/
+    recursive: true             #  启用递归备份
+    recursion_depth: 2
+#  - github_repo: ACL4SSR/ACL4SSR
+ #   branch: master
+  #  folder_path: Clash/Ruleset
+   # file_extension: .list
+    # backup_location: ./config/Ruleset/ACL4SSR/Ruleset/
     
