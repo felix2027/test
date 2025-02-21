@@ -95,7 +95,7 @@ folders:
     backup_location: ./config/Ruleset/ACL4SSR/
   - github_repo: ACL4SSR/ACL4SSR
     branch: master
-    folder_path: Clash/Rulest/
+    folder_path: Clash/Ruleset/
     file_extension: .list
     backup_location: ./config/Ruleset/ACL4SSR/Ruleset/
     
