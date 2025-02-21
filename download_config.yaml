@@ -1,5 +1,5 @@
 files:
-  - filename: config
+  - filename: config.txt
     url: http://106.75.143.245:3390/api/v1/client/subscribe?token=46df0e5a0b59a78ab3102339d9245f24
     download_location: ./downloads/
 folders:
