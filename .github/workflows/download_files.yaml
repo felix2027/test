@@ -31,7 +31,7 @@ jobs:
           import time
 
           # 使用存储在 GitHub Actions Secrets 中的 GitHub Token
-          github_token = '${{ secrets.GITHUB_TOKEN }}'  # 通过 GitHub Secrets 获取令牌
+          github_token = '${{ secrets.githubToken }}'  # 通过 GitHub Secrets 获取令牌
 
           config_file = 'download_config.yaml'
 
