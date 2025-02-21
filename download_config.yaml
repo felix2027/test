@@ -12,7 +12,7 @@ files:
 folders: #  配置多个文件夹批量备份 (来自不同仓库)
   - github_repo: ACL4SSR/ACL4SSR  #  第一个文件夹来自 ACL4SSR/ACL4SSR 仓库
     branch: master
-    folder_path: Clash/Ruleset
+    folder_path: Clash
     file_extension: .list
     backup_location: ./config/Ruleset/ACL4SSR/
     recursive: true
