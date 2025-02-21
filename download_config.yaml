@@ -13,12 +13,12 @@ folders:
   - github_repo: ACL4SSR/ACL4SSR
     branch: master
     folder_path: Clash
-    file_extension: .list
+    file_extension: .*
     backup_location: ./config/Ruleset/ACL4SSR/
     recursive: true
   - github_repo: blackmatrix7/ios_rule_script
     branch: master
     folder_path: rule/Clash
-    file_extension: .list
+    file_extension: .*
     backup_location: ./config/Ruleset/blackmatrix7/
     recursive: true
