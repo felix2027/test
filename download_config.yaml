@@ -97,5 +97,5 @@ folders:
     branch: master
     folder_path: Clash/Rulest/
     file_extension: .list
-    backup_location: ./config/Ruleset/ACL4SSR/Ruleset
+    backup_location: ./config/Ruleset/ACL4SSR/Ruleset/
     
