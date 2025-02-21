@@ -28,6 +28,10 @@ jobs:
           import os
           import urllib.request
           import requests
+          import time
+
+          # GitHub Token for authentication to avoid rate limit issues
+          github_token = 'YOUR_GITHUB_TOKEN'  # Replace with your actual GitHub token
 
           config_file = 'download_config.yaml'
 
@@ -69,9 +73,10 @@ jobs:
 
                   if github_repo and folder_path and file_extension and backup_location:
                       api_url = f'https://api.github.com/repos/{github_repo}/contents/{folder_path}?ref={branch}'  # GitHub API URL
+                      headers = {'Authorization': f'token {github_token}'}  # Authentication header
 
                       try:
-                          response = requests.get(api_url)
+                          response = requests.get(api_url, headers=headers)
                           response.raise_for_status()
                           files_data = response.json()
                       except requests.exceptions.RequestException as e:
@@ -81,23 +86,24 @@ jobs:
                       # 递归下载文件夹中的内容
                       def download_files_recursive(api_url, backup_location):
                           try:
-                              response = requests.get(api_url)
+                              response = requests.get(api_url, headers=headers)
                               response.raise_for_status()
                               files_data = response.json()
-                              
+
                               for file_info in files_data:
                                   if file_info['type'] == 'file' and file_info['name'].endswith(file_extension):
                                       filename = file_info['name']
                                       download_url = file_info['download_url']
                                       download_path = os.path.join(backup_location, filename)
-                                      
+
                                       files_to_download.append({
                                           'filename': filename,
                                           'url': download_url,
                                           'download_location': backup_location
                                       })
-                                  elif file_info['type'] == 'dir' and folder_config.get('recursive', False):
+                                  elif file_info['type'] == 'dir':
                                       download_files_recursive(file_info['url'], backup_location)  # 递归下载子文件夹中的文件
+                                      time.sleep(1)  # 延时1秒避免请求过于频繁
 
                           except requests.exceptions.RequestException as e:
                               print(f'Error fetching files recursively: {e}')
