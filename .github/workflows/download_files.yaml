@@ -30,8 +30,8 @@ jobs:
           import requests
           import time
 
-          # GitHub Token for authentication to avoid rate limit issues
-          github_token = 'YOUR_GITHUB_TOKEN'  # Replace with your actual GitHub token
+          # 使用存储在 GitHub Actions Secrets 中的 GitHub Token
+          github_token = '${{ secrets.GITHUB_TOKEN }}'  # 通过 GitHub Secrets 获取令牌
 
           config_file = 'download_config.yaml'
 
@@ -73,7 +73,7 @@ jobs:
 
                   if github_repo and folder_path and file_extension and backup_location:
                       api_url = f'https://api.github.com/repos/{github_repo}/contents/{folder_path}?ref={branch}'  # GitHub API URL
-                      headers = {'Authorization': f'token {github_token}'}  # Authentication header
+                      headers = {'Authorization': f'token {github_token}'}  # 使用 GitHub token 进行身份验证
 
                       try:
                           response = requests.get(api_url, headers=headers)
@@ -148,4 +148,4 @@ jobs:
           git config --local user.name "GitHub Actions"
           git add --force .
           git commit -m "Daily update"
-          git push
+          git push     
