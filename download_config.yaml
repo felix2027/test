@@ -14,4 +14,13 @@ folders: #  配置多个文件夹批量备份 (来自不同仓库)
     branch: master
     folder_path: Clash/Ruleset
     file_extension: .list
-    backup_location: ./config/Ruleset/
+    backup_location: ./config/Ruleset/ACL4SSR/
+    recursive: true
+    recursion_depth: 2
+  - github_repo: blackmatrix7/ios_rule_script
+    branch: master
+    folder_path: Clash
+    file_extension: .list
+    backup_location: ./config/Ruleset/blackmatrix7/
+    recursive: true
+    recursion_depth: 3
